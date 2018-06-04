@@ -3,6 +3,8 @@
 
 Create beautiful PDFs of source code.
 
+![screenshot](screenshot.png)
+
 ## samples
 
 * flask
@@ -26,3 +28,8 @@ Convert to pdf:
 _This requires a full LaTeX installation with packages like minted etc. Have a look at the template.tex file for which packages are used._
 
 `latexmk -silent -pdf -shell-escape -pdflatex='pdflatex -interaction=nonstopmode' project.tex`
+
+## todo
+
+* Use more nesting
+    - `\chapter`, `\subsubsection` etc.
