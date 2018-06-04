@@ -1,0 +1,94 @@
+#!/usr/bin/env python3.6
+
+"""
+Takes in a directory path and generates a tex?
+
+$ ./src2tex /path/to/source
+"""
+
+import sys
+import os
+import itertools
+
+# http://pygments.org/docs/lexers/
+LANGS = {
+    "python": [".py", ".pyw"],
+    "cython": [".pyx", ".pxd", ".pxi"],
+    "c": [".c", ".h", ".idc"],
+    "cpp": [".cpp", ".hpp", ".c++", ".h++", ".cc",
+            ".hh", ".cxx", ".hxx", ".C", ".H", ".cp", ".CPP"],
+}
+
+EXT_LANG = {
+    e: typ
+    for typ, exts in LANGS.items()
+    for e in exts
+}
+
+SOURCE_EXTENSIONS = [
+    e
+    for exts in LANGS.values()
+    for e in exts
+]
+
+
+def latex_escape(s):
+    return (s.replace("_", "\\_"))
+
+
+def src_latex(root):
+
+    # The string to return
+    rv = ""
+
+    # Keep track of sections being created
+    sections = {}
+
+    for parent, dirs, files in os.walk(root):
+
+        # Alphabetical ordering
+        dirs.sort()
+        files.sort()
+
+        for file in files:
+
+            # Only code files
+            _, ext = os.path.splitext(file)
+            if ext not in SOURCE_EXTENSIONS:
+                continue
+
+            section = parent[len(root):].lstrip("/")
+            if section not in sections:
+                sections[section] = True
+                section = latex_escape(section) or "."
+                rv += "\n"
+                rv += f"\section{{{section}}}" + "\n"
+
+            fullpath = os.path.join(parent, file)
+            file = latex_escape(file)
+            lang = EXT_LANG[ext]
+
+            rv += "\n"
+            rv += f"\subsection{{{file}}}" + "\n"
+            rv += f"\inputminted{{{lang}}}{{{fullpath}}}" + "\n"
+            rv += f"\\newpage" + "\n"
+
+            # print(os.path.join(root, file))
+
+    return rv
+
+
+def main(root):
+
+    with open("template.tex") as f:
+        template = f.read()
+
+    sources = src_latex(root)
+
+    template = template.replace("{{sources}}", sources)
+
+    print(template)
+
+
+if __name__ == '__main__':
+    main(root=sys.argv[1])
