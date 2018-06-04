@@ -1,8 +1,6 @@
 
 # src2tex
 
-Create beautiful PDFs of source code.
-
 ![screenshot](screenshot.png)
 
 ## samples
