@@ -7,11 +7,11 @@ Create beautiful PDFs of source code.
 
 ## samples
 
-* flask
-* requests
-* pandas
-* scikit-learn
-* Bitcoin Core v0.16.0
+* [flask](https://github.com/dufferzafar/src2tex/releases/download/v1/flask.pdf)
+* [requests](https://github.com/dufferzafar/src2tex/releases/download/v1/requests.pdf)
+* [pandas](https://github.com/dufferzafar/src2tex/releases/download/v1/pandas.pdf)
+* [scikit-learn](https://github.com/dufferzafar/src2tex/releases/download/v1/scikit-learn.pdf)
+* [bitcoin](https://github.com/dufferzafar/src2tex/releases/download/v1/bitcoin.pdf)
 
 ## why?
 
